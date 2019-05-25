@@ -43,7 +43,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">点击确认</button>
-                    <button type="button" class="btn btn-primary">残忍离开</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">残忍离开</button>
                 </div>
             </div>
         </div>
@@ -52,33 +52,48 @@
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <script>
+        /*
+        基地址：https://autumnfish.cn/big
+        1、用户登录
+        请求地址：/admin/login
+        请求方式：post
+        请求参数：user_name	string	用户名（admin）
+                 password  string	密码(123456)
+        */
         $(function () {
             $('.input_sub').click(function (e) {
                 e.preventDefault()
                 var text = $('.input_txt').val().trim()
-                var password = $('.input_pass').val().trim()
-                if (text == '' || password == '') {
+                var pass = $('.input_pass').val().trim()
+                if (text == '' || pass == '') {
+                    // alert('输入点什么吧')
                     $('.inhtml').text('用户名或密码不能为空')
                     $('#myModal').modal()
                     return
                 }
+
                 $.ajax({
                     url: 'https://autumnfish.cn/big/admin/login',
                     type: 'post',
                     data: {
                         user_name: text,
-                        password: password
+                        password: pass
                     },
                     success: function (backData) {
+                        // console.log(backData);
                         if (backData.code == 400) {
+                            // alert('用户名或密码错误哦')
                             $('.inhtml').text('用户名或密码输入错误')
                             $('#myModal').modal()
                             return
                         } else if (backData.code == 200) {
                             window.location.href = './index.html'
                         }
-
                     }
+                })
+
+                $('.btn-primary').click(function () {
+                    return
                 })
             })
         })
