@@ -24,38 +24,39 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">用户名称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="李思思">
+                        <input type="text" class="form-control username" name="username" value="李思思">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">昵称：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="思思">
+                        <input type="text" class="form-control nickname" name="nickname" value="思思">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">邮箱：</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control" id="inputEmail3" value="lisisi@126.com">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
-                    <div class="col-sm-10">
-                        <img src="images/2.jpg" alt="" class="user_pic">
-                        <input type="file" id="exampleInputFile">
+                        <input type="text" class="form-control email" name="email" value="lisisi@126.com">
                     </div>
                 </div>
 
                 <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">密码：</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" id="inputEmail3" value="12345678">
-                        </div>
+                    <label for="inputPassword3" class="col-sm-2 control-label">用户图标：</label>
+                    <div class="col-sm-10">
+                        <img src="images/2.jpg" alt="" class="user_pic" />
+                        <input type="file" id="exampleInputFile" name="user_pic">
                     </div>
-               
-    
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label ">密码：</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control password" name="password" id="inputEmail3"
+                            value="12345678">
+                    </div>
+                </div>
+
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success">修改</button>
@@ -64,7 +65,69 @@
             </form>
         </div>
     </div>
+    <script>
+        /*
+   请求地址：https://autumnfish.cn/big32/admin/userinfo_get
+    请求方式：get
+    请求参数：无
+    返回数据：
+    名称	类型	说明
+    username	string	用户名称
+    nickname	string	用户昵称
+    email	string	用户邮箱
+    user_pic	string	用户图片地址
+    password	string	用户密码
+    */
 
+        $(function () {
+            $.ajax({
+                url: 'https://autumnfish.cn/big32/admin/userinfo_get',
+                type: 'get',
+                success: function (backData) {
+                    console.log(backData);
+                    for (const key in backData.data) {
+                        $('input.' + key).val(backData.data[key])
+                    }
+                    $('.user_pic').attr('src', backData.data.user_pic)
+                }
+            })
+
+            $('#exampleInputFile').change(function () {
+                var file = this.files[0]
+                var url = URL.createObjectURL(file)
+                $(this).prev().attr('src', url)
+            })
+
+            /*
+            22、编辑用户信息
+            请求地址：https://autumnfish.cn/big32/admin/userinfo_edit
+            请求方式：post
+            请求参数：使用formdata提交
+            名称	类型	说明
+            username	string	用户名称
+            nickname	string	用户昵称
+            email	string	用户邮箱
+            user_pic	string	用户图片地址
+            password	string	用户密码
+            */
+            $('.btn-success').click(function (e) {
+                e.preventDefault()
+                var formData = new FormData($('form')[0])
+                $.ajax({
+                    url: 'https://autumnfish.cn/big32/admin/userinfo_edit',
+                    type: 'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (backData) {
+                        console.log(backData);
+
+                    }
+                })
+            })
+
+        })
+    </script>
 </body>
 
 </html>
