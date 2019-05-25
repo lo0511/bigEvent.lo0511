@@ -150,6 +150,27 @@
                     }
                 })
             })
+            /*
+            请求地址：https://autumnfish.cn/big32/admin/getuser
+                请求方式：get
+                请求参数：
+                返回数据：
+                名称	类型	说明
+                nickname	string	用户昵称
+                user_pic	string	用户图片地址
+            */
+
+            $.ajax({
+                url: 'https://autumnfish.cn/big32/admin/getuser',
+                type: 'get',
+                success: function (backData) {
+                    // console.log(backData);
+                    $('.user_info img').attr('src', backData.data.user_pic)
+                    $('.user_info span').html('欢迎&nbsp;&nbsp;' + backData.data.nickname)
+                    $('.user_center_link img').attr('src', backData.data.user_pic)
+
+                }
+            })
         })
     </script>
 </body>
