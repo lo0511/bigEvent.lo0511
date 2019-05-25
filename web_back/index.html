@@ -71,7 +71,7 @@
                     是否退出
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">我在想想</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">点击确认</button>
                     <button type="button" class="btn btn-primary">残忍离开</button>
                 </div>
             </div>
@@ -130,29 +130,20 @@
                 $('.level02').children().eq(n).addClass('active').siblings().removeClass('active');
             }
         }
-        /*
-        基地址：https://autumnfish.cn/big
-        2、退出登录
-            请求地址：/admin/logout
-            请求方式：post
-        */
+
         $(function () {
             $('.icon-tuichu').parent().click(function () {
                 $('#myModal').modal()
-            })
-            $('.btn-default').click(function () {
-                return
+
             })
             $('.btn-primary').click(function () {
                 $.ajax({
                     url: 'https://autumnfish.cn/big/admin/logout',
                     type: 'post',
                     success: function (backData) {
-                        console.log(backData);
                         if (backData.code == 200) {
-                            window.location.href = 'login.html'
+                            window.location.href = './login.html'
                         }
-
                     }
                 })
             })
