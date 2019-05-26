@@ -115,8 +115,8 @@
         });
 
         $('#model_shutoff').click(function () {
-            alert('shutoff');
             $('#addModal').modal('hide');
+            return
         });
 
 
@@ -190,10 +190,8 @@
                         if (backData.code == 200) {
                             getData()
                         }
-
                     }
                 })
-
             });
         })
     </script>
