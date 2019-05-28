@@ -67,7 +67,7 @@
     </div>
     <script>
         /*
-   请求地址：https://autumnfish.cn/big32/admin/userinfo_get
+   请求地址： http://localhost:8000/admin/userinfo_get
     请求方式：get
     请求参数：无
     返回数据：
@@ -81,26 +81,23 @@
 
         $(function () {
             $.ajax({
-                url: 'https://autumnfish.cn/big32/admin/userinfo_get',
+                url: ' http://localhost:8000/admin/userinfo_get',
                 type: 'get',
                 success: function (backData) {
-                    console.log(backData);
                     for (const key in backData.data) {
                         $('input.' + key).val(backData.data[key])
                     }
                     $('.user_pic').attr('src', backData.data.user_pic)
                 }
             })
-
             $('#exampleInputFile').change(function () {
                 var file = this.files[0]
                 var url = URL.createObjectURL(file)
                 $(this).prev().attr('src', url)
             })
-
             /*
             22、编辑用户信息
-            请求地址：https://autumnfish.cn/big32/admin/userinfo_edit
+            请求地址： http://localhost:8000/admin/userinfo_edit
             请求方式：post
             请求参数：使用formdata提交
             名称	类型	说明
@@ -114,7 +111,7 @@
                 e.preventDefault()
                 var formData = new FormData($('form')[0])
                 $.ajax({
-                    url: 'https://autumnfish.cn/big32/admin/userinfo_edit',
+                    url: ' http://localhost:8000/admin/userinfo_edit',
                     type: 'post',
                     data: formData,
                     contentType: false,
