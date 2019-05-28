@@ -87,12 +87,40 @@
         </div>
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script type="text/html" id="cate">
+        {{each data}}
+        <option value="{{$value.id}}">{{$value.name}}</option>
+        {{/each}}
+    </script>
     <script>
         $(function () {
+            // 增加文章编辑后的图片预览功能
             $('#exampleInputFile').change(function () {
                 var file = this.files[0]
                 var url = URL.createObjectURL(file)
                 $(this).prev('img').attr('src', url)
+            })
+
+            /*
+            基地址：http://localhost:8000
+            13、文章类别搜索
+                请求地址：https://autumnfish.cn/big32/admin/category_search
+                请求方式：get
+                请求参数：无
+                返回数据：
+                名称	类型	说明
+                id	number	类别
+                name	string	类别名称
+                slug	string	别名
+            */
+            $.ajax({
+                url: 'http://localhost:8000/admin/category_search',
+                success: function (backData) {
+                    // console.log(backData);
+                    $('select').html(template('cate', backData))
+
+                }
             })
         })
     </script>
