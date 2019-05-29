@@ -215,12 +215,54 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script type="text/html" id="textList">
+        {{each data}}
+        {{if $index==0}}
+        <li class="first">
+            {{else}}
+        <li>
+            {{/if}}
+            <a href="./article.html?id={{$value.id}}"><img src="{{$value.cover}}" alt=""></a>
+            <p>{{$value.title}}</p>
+        </li>
+        {{/each}}
+    </script>
+    <script>
+        /*
+        基地址：http://localhost:8000/admin/
+    1、文章搜索
+        请求地址：/search
+        请求方式：get
+        请求参数：
+        名称	类型	说明
+        key	string	搜索关键词，可以为空，为空返回某类型所有文章
+        type	string	文章类型，可以为空，为空返回所有类型文章
+        page	number	当前页，为空返回第1页
+        perpage	number	每页显示条数，为空默认每页6条
+    */
+        $(function () {
+            $.ajax({
+                url: 'http://localhost:8000/admin/search',
+                data: {
+                    page: 1,
+                    perpage: 6
+                },
+                success: function (backData) {
+                    // console.log(backData);
+                    var html = template('textList', backData)
+                    $('.focus_list').html(html)
 
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
